@@ -61,6 +61,7 @@
 ./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TBranch.h
 ./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TBranchCacheInfo.h
 ./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TBits.h
+./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TChain.h
 ./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TH1F.h
 ./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TH1.h
 ./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TAxis.h
@@ -74,6 +75,7 @@
 ./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TVectorFfwd.h
 ./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TVectorDfwd.h
 ./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TFitResultPtr.h
+./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TH1D.h
 ./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TCanvas.h
 ./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TPad.h
 ./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TVirtualPad.h
@@ -86,7 +88,6 @@
 ./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/Buttons.h
 ./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TAttBBox2D.h
 ./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TAttCanvas.h
-./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TSpectrum.h
 ./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TF1.h
 ./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TFormula.h
 ./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TMath.h
@@ -229,10 +230,5 @@
 ./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TMethodCall.h
 ./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TF1AbsComposition.h
 ./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/Math/ParamFunctor.h
-./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TH2F.h
-./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TH2.h
-./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TMatrixFBasefwd.h
-./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TMatrixDBasefwd.h
-./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/TGraph.h
 ./dsssd_calibration_cpp.so: /home/olivia/miniconda3/include/RVersion.h /home/olivia/miniconda3/include/ROOT/RConfig.hxx /home/olivia/miniconda3/include/TClass.h /home/olivia/miniconda3/include/TDictAttributeMap.h /home/olivia/miniconda3/include/TInterpreter.h /home/olivia/miniconda3/include/TROOT.h /home/olivia/miniconda3/include/TBuffer.h /home/olivia/miniconda3/include/TMemberInspector.h /home/olivia/miniconda3/include/TError.h /home/olivia/miniconda3/include/RtypesImp.h /home/olivia/miniconda3/include/TIsAProxy.h /home/olivia/miniconda3/include/TFileMergeInfo.h /home/olivia/miniconda3/include/TCollectionProxyInfo.h /home/olivia/miniconda3/bin/rootcling
 dsssd_calibration_cpp__ROOTBUILDVERSION= 6.34.04
