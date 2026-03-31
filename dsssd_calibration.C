@@ -8,6 +8,7 @@
 #include <TF1.h>
 #include <TMath.h>
 #include <TSystem.h>
+#include <TROOT.h>
 
 #include <vector>
 #include <iostream>
@@ -16,6 +17,8 @@ using namespace std;
 
 void dsssd_calibration()
 {
+ gROOT->SetBatch(kTRUE);
+
   //==================== choose SEC run here ====================
 
   //r0990
@@ -83,40 +86,52 @@ void dsssd_calibration()
    //==================== choose STR run here ====================
 
    //r0990
-  TString runTag = "r0990";
-  int histogramBins = 1000;
-  double histogramMin = 0;
-  double histogramMax = 20000;
-  TString cutCondition = "Id_6>4.68 && Id_6<5.45 && Id_11>222.2 && Id_11<225";
+  // TString runTag = "r0990_r0991_r0992";
+  // int histogramBins = 800;
+  // double histogramMin = 8000;
+  // double histogramMax = 12000;
+  // TString cutCondition = "Id_6>4.68 && Id_6<5.45 && Id_11>222.2 && Id_11<225";
+  // TString fitFunctionExpression = "gaus(0)+gaus(3)+pol1(6)";
+  // double fitLeftOffset = 600;
+  // double fitRightOffset = 900;
+  // double initialParameters[] = {2088.77, 9546.38, 108.846, 828.432, 9697.44, 224.788, 0, 0};
+  // int numberOfParameters = 8;
+
+  //r1041
+  TString runTag = "r1041_r1042_r1043_rerun_half_bins";
+  int histogramBins = 400;
+  double histogramMin = 8000;
+  double histogramMax = 12000;
+  TString cutCondition = "Id_6>4.44 && Id_6<5.22 && Id_11>221.33 && Id_11<224.18";
   TString fitFunctionExpression = "gaus(0)+gaus(3)+pol1(6)";
-  double fitLeftOffset = 800;
+  double fitLeftOffset = 600;
   double fitRightOffset = 800;
-  double initialParameters[] = {2088.77, 9546.38, 108.846, 828.432, 9697.44, 224.788, 280.134, -0.0221279};
+  double initialParameters[] = {2088.77, 9546.38, 108.846, 828.432, 9697.44, 224.788, 0, 0};
   int numberOfParameters = 8;
 
   //r0944
-  // TString runTag = "r0944";
-  // int histogramBins = 2000;
-  // double histogramMin = 4000;
-  // double histogramMax = 7000;
-  // TString cutCondition = "Id_6>6.56 && Id_6<7.53 && Id_11>226.87 && Id_11<229.02";
-  // TString fitFunctionExpression = "gaus(0)+gaus(3)+pol1(6)";
-  // double fitLeftOffset = 1000;
-  // double fitRightOffset = 600;
-  // double initialParameters[] = {20, 5200, 250, 180, 5600, 150, 0.0, 0.0};
-  // int numberOfParameters = 8;
+//   TString runTag = "r0944_r0945_r0946";
+//   int histogramBins = 1000;
+//   double histogramMin = 13000;
+//   double histogramMax = 18000;
+//   TString cutCondition = "Id_6>6.56 && Id_6<7.53 && Id_11>226.87 && Id_11<229.02";
+//   TString fitFunctionExpression = "gaus(0)+gaus(3)+pol1(6)";
+//   double fitLeftOffset = 750;
+//   double fitRightOffset = 1800;
+// double initialParameters[] = {1465.25, 14761.1, 202.736, 250.557, 15510.1, 273.844, 0,0};
+//   int numberOfParameters = 8;
 
-  //r1081
-  // TString runTag = "r1081";
-  // int histogramBins = 2000;
-  // double histogramMin = 0;
-  // double histogramMax = 7000;
-  // TString cutCondition = "Id_6>4.47 && Id_6<5.2 && Id_11>221.69 && Id_11<224.78";
-  // TString fitFunctionExpression = "gaus(0)+gaus(3)+expo(6)";
-  // double fitLeftOffset = 1500;
-  // double fitRightOffset = 800;
-  // double initialParameters[] = {28, 5232, 363, 74, 5729, 190, 0.0, 0.0};
-  // int numberOfParameters = 8;
+//r1081
+// TString runTag = "r1081_r1082_r1083";
+// int histogramBins = 500;
+// double histogramMin = 8000;
+// double histogramMax = 10500;
+// TString cutCondition = "Id_6>4.47 && Id_6<5.2 && Id_11>221.69 && Id_11<224.78";
+// TString fitFunctionExpression = "gaus(0)+gaus(3)+expo(6)";
+// double fitLeftOffset = 600;
+// double fitRightOffset = 750;
+// double initialParameters[] = {240.912, 9165.89, 100.779, 145.113, 9292.36, 190.524, 0, 0};
+// int numberOfParameters = 8;
 
   //r1131
   // TString runTag = "r1131";
@@ -144,10 +159,13 @@ void dsssd_calibration()
 
   //=========================================================
 
+  //TODO runuri mai tarzii dupa schimbarea cu numexo 1159
+
   std::cout << runTag.Data() << '\n';
-  TString filePattern = Form("/media/olivia/Partition1/CATS/Remerged/%s_*.root", runTag.Data());
+  TString filePattern = Form("/media/olivia/Partition1/CATS/Remerged/r104*.root", runTag.Data());
   TString outFileName = Form("dsssd_calib_Str_%s.root", runTag.Data());
   TString outTextName = outFileName;
+  //nume standardizate
   outTextName.ReplaceAll(".root", ".txt");
   TString outPdfName = outFileName;
   outPdfName.ReplaceAll(".root", ".pdf");
@@ -155,10 +173,9 @@ void dsssd_calibration()
   std::ofstream outTextFile(outTextName.Data());
 
   TChain* AD = new TChain("AD");
-  //TODO calibrare pe un run de sulf si unul pe siliciu
-  //TODO runuri mai tarzii dupa schimbarea cu numexo 1159
   AD->Add(filePattern);
 
+  //outfile este pointer la adresa unde este stocat fisierul meu 
   TFile* outFile = new TFile(outFileName, "RECREATE");
 
   std::vector<TCanvas*> canvasVector;
@@ -173,6 +190,7 @@ void dsssd_calibration()
 
   for (int stripNumber = 0; stripNumber <= 63; ++stripNumber)
   {
+    //set the current directory to which we write to the output file
     outFile->cd();
 
     TString histogramName = Form("h_%s_Str_%d", runTag.Data(), stripNumber);
@@ -201,47 +219,80 @@ void dsssd_calibration()
     double fitLeft = peakCenter - fitLeftOffset;
     double fitRight = peakCenter + fitRightOffset;
 
-    TF1* compositeFunction = new TF1(functionName, fitFunctionExpression.Data(), fitLeft, fitRight);
+    TF1* fitFunction = new TF1(functionName, fitFunctionExpression.Data(), fitLeft, fitRight);
 
     for (int parameterIndex = 0; parameterIndex < numberOfParameters; ++parameterIndex)
     {
-      compositeFunction->SetParameter(parameterIndex, initialParameters[parameterIndex]);
+      fitFunction->SetParameter(parameterIndex, initialParameters[parameterIndex]);
     }
 
-    histogramPointer->Fit(compositeFunction, "RQ");
-
-    double area = 0.0;
-    if (numberOfParameters >= 3)
-    {
-      double amplitude = compositeFunction->GetParameter(0);
-      double sigma = compositeFunction->GetParameter(2);
-      area = amplitude * sigma * TMath::Sqrt(2.0 * TMath::Pi());
-    }
-
-    std::cout << stripNumber;
-    outTextFile << stripNumber;
-
-    for (int parameterIndex = 0; parameterIndex < numberOfParameters; ++parameterIndex)
-    {
-      double parameterValue = compositeFunction->GetParameter(parameterIndex);
-      double parameterError = compositeFunction->GetParError(parameterIndex);
-      std::cout << " " << parameterValue << " " << parameterError;
-      outTextFile << " " << parameterValue << " " << parameterError;
-    }
-
-    std::cout << " " << area << "\n";
-    outTextFile << " " << area << "\n";
-
-    outFile->cd();
-    histogramPointer->Write();
-    compositeFunction->Write();
-
-    TCanvas* canvas = new TCanvas(Form("c_%s_Str_%d", runTag.Data(), stripNumber), Form("c_%s_Str_%d", runTag.Data(), stripNumber), 900, 700);
+    TCanvas* canvas = new TCanvas(Form("c_%s_Str_%d", runTag.Data(), stripNumber),
+                                   Form("c_%s_Str_%d", runTag.Data(), stripNumber),
+                                   900, 700);
     canvas->cd();
+
+    histogramPointer->Fit(fitFunction, "RQ");
     histogramPointer->Draw();
-    compositeFunction->Draw("same");
+
     canvas->Modified();
     canvas->Update();
+
+    double meanSelected = 0.0;
+    double sigmaSelected = 0.0;
+    double ampSelected = 0.0;
+    double meanErrSelected = 0.0;
+
+    if (numberOfParameters >= 6)
+    {
+      double amp1 = fitFunction->GetParameter(0);
+      double mean1 = fitFunction->GetParameter(1);
+      double sigma1 = fitFunction->GetParameter(2);
+      double meanErr1 = fitFunction->GetParError(1);
+
+      double amp2 = fitFunction->GetParameter(3);
+      double mean2 = fitFunction->GetParameter(4);
+      double sigma2 = fitFunction->GetParameter(5);
+      double meanErr2 = fitFunction->GetParError(4);
+
+      if (amp1 >= amp2)
+      {
+        meanSelected = mean1;
+        sigmaSelected = sigma1;
+        ampSelected = amp1;
+        meanErrSelected = meanErr1;
+      }
+      else
+      {
+        meanSelected = mean2;
+        sigmaSelected = sigma2;
+        ampSelected = amp2;
+        meanErrSelected = meanErr2;
+      }
+    }
+    else
+    {
+      meanSelected = fitFunction->GetParameter(1);
+      sigmaSelected = fitFunction->GetParameter(2);
+      ampSelected = fitFunction->GetParameter(0);
+      meanErrSelected = fitFunction->GetParError(1);
+    }
+
+    std::cout << stripNumber << " "
+              << meanSelected << " "
+              << sigmaSelected << " "
+              << ampSelected << " "
+              << meanErrSelected << "\n";
+
+    outTextFile << stripNumber << " "
+                << meanSelected << " "
+                << sigmaSelected << " "
+                << ampSelected << " "
+                << meanErrSelected << "\n";
+
+    outFile->cd();
+    // histogramPointer->Write();
+    // fitFunction->Write();
+    canvas->Write();
 
     if (!openedPdf)
     {
@@ -252,7 +303,7 @@ void dsssd_calibration()
 
     canvasVector.push_back(canvas);
     histogramVector.push_back(histogramPointer);
-    functionVector.push_back(compositeFunction);
+    functionVector.push_back(fitFunction);
 
     gSystem->ProcessEvents();
   }
@@ -267,25 +318,8 @@ void dsssd_calibration()
   outTextFile.close();
   outFile->Close();
 
-  std::cout << "Press Enter to finish.\n";
-  cin.get();
+  //////////////////////////////////////////////////////////////
 
-  for (size_t canvasIndex = 0; canvasIndex < functionVector.size(); ++canvasIndex)
-  {
-    delete functionVector[canvasIndex];
-  }
-
-  for (size_t histogramIndex = 0; histogramIndex < histogramVector.size(); ++histogramIndex)
-  {
-    delete histogramVector[histogramIndex];
-  }
-
-  for (size_t canvasIndex = 0; canvasIndex < canvasVector.size(); ++canvasIndex)
-  {
-    delete canvasVector[canvasIndex];
-  }
-
-  std::cout<<"FINISHED";
-  delete outFile;
-  delete AD;
+  std::cout << "FINISHED\n";
+  while(kTRUE) gSystem->ProcessEvents();
 }
