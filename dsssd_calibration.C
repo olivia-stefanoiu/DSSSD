@@ -17,21 +17,21 @@ using namespace std;
 
 void dsssd_calibration()
 {
- gROOT->SetBatch(kTRUE);
+ //gROOT->SetBatch(kTRUE);
 
   //==================== choose SEC run here ====================
 
   //r0990
-  // TString runTag = "r0990";
-  // int histogramBins = 1000;
-  // double histogramMin = 0;
-  // double histogramMax = 20000;
-  // TString cutCondition = "Id_6>4.68 && Id_6<5.45 && Id_11>222.2 && Id_11<225";
-  // TString fitFunctionExpression = "gaus(0)+gaus(3)+pol1(6)";
-  // double fitLeftOffset = 900;
-  // double fitRightOffset = 600;
-  // double initialParameters[] = {60, 6900, 170.0, 250, 7250, 100, 0.0, 0.0};
-  // int numberOfParameters = 8;
+  TString runTag = "sec_r0990_r0991_r0992";
+  int histogramBins = 1000;
+  double histogramMin = 0;
+  double histogramMax = 20000;
+  TString cutCondition = "Id_6>4.68 && Id_6<5.45 && Id_11>222.2 && Id_11<225";
+  TString fitFunctionExpression = "gaus(0)+gaus(3)+pol1(6)";
+  double fitLeftOffset = 900;
+  double fitRightOffset = 600;
+  double initialParameters[] = {60, 6900, 170.0, 250, 7250, 100, 0.0, 0.0};
+  int numberOfParameters = 8;
 
   //r0944
   // TString runTag = "r0944";
@@ -98,16 +98,16 @@ void dsssd_calibration()
   // int numberOfParameters = 8;
 
   //r1041
-  TString runTag = "r1041_r1042_r1043_rerun_half_bins";
-  int histogramBins = 400;
-  double histogramMin = 8000;
-  double histogramMax = 12000;
-  TString cutCondition = "Id_6>4.44 && Id_6<5.22 && Id_11>221.33 && Id_11<224.18";
-  TString fitFunctionExpression = "gaus(0)+gaus(3)+pol1(6)";
-  double fitLeftOffset = 600;
-  double fitRightOffset = 800;
-  double initialParameters[] = {2088.77, 9546.38, 108.846, 828.432, 9697.44, 224.788, 0, 0};
-  int numberOfParameters = 8;
+  // TString runTag = "r1041_r1042_r1043_rerun_half_bins";
+  // int histogramBins = 200;
+  // double histogramMin = 8500;
+  // double histogramMax = 11000;
+  // TString cutCondition = "Id_6>4.44 && Id_6<5.22 && Id_11>221.33 && Id_11<224.18";
+  // TString fitFunctionExpression = "gaus(0)+gaus(3)+pol1(6)";
+  // double fitLeftOffset = 600;
+  // double fitRightOffset = 800;
+  // double initialParameters[] = {2088.77, 9546.38, 108.846, 828.432, 9697.44, 224.788, 0, 0};
+  // int numberOfParameters = 8;
 
   //r0944
 //   TString runTag = "r0944_r0945_r0946";
@@ -163,7 +163,7 @@ void dsssd_calibration()
 
   std::cout << runTag.Data() << '\n';
   TString filePattern = Form("/media/olivia/Partition1/CATS/Remerged/r104*.root", runTag.Data());
-  TString outFileName = Form("dsssd_calib_Str_%s.root", runTag.Data());
+  TString outFileName = Form("dsssd_calib_Sec_%s.root", runTag.Data());
   TString outTextName = outFileName;
   //nume standardizate
   outTextName.ReplaceAll(".root", ".txt");
@@ -188,19 +188,19 @@ void dsssd_calibration()
 
   bool openedPdf = false;
 
-  for (int stripNumber = 0; stripNumber <= 63; ++stripNumber)
+  for (int stripNumber = 0; stripNumber <= 15; ++stripNumber)
   {
     //set the current directory to which we write to the output file
     outFile->cd();
 
-    TString histogramName = Form("h_%s_Str_%d", runTag.Data(), stripNumber);
-    TString functionName = Form("f_%s_Str_%d", runTag.Data(), stripNumber);
+    TString histogramName = Form("h_%s_Sec_%d", runTag.Data(), stripNumber);
+    TString functionName = Form("f_%s_Sec_%d", runTag.Data(), stripNumber);
 
     TObject* existingHistogramObject = gDirectory->Get(histogramName);
     if (existingHistogramObject) { delete existingHistogramObject; }
 
-    AD->Draw(Form("S1_StrRaw>>%s(%d,%g,%g)", histogramName.Data(), histogramBins, histogramMin, histogramMax),
-             Form("S1_StrRawNr==%d && %s", stripNumber, cutCondition.Data()),
+    AD->Draw(Form("S1_SecRaw>>%s(%d,%g,%g)", histogramName.Data(), histogramBins, histogramMin, histogramMax),
+             Form("S1_SecRawNr==%d && %s", stripNumber, cutCondition.Data()),
              "goff");
 
     TH1D* histogramPointer = (TH1D*)gDirectory->Get(histogramName);
@@ -226,8 +226,8 @@ void dsssd_calibration()
       fitFunction->SetParameter(parameterIndex, initialParameters[parameterIndex]);
     }
 
-    TCanvas* canvas = new TCanvas(Form("c_%s_Str_%d", runTag.Data(), stripNumber),
-                                   Form("c_%s_Str_%d", runTag.Data(), stripNumber),
+    TCanvas* canvas = new TCanvas(Form("c_%s_Sec_%d", runTag.Data(), stripNumber),
+                                   Form("c_%s_Sec_%d", runTag.Data(), stripNumber),
                                    900, 700);
     canvas->cd();
 

@@ -1,8 +1,11 @@
 import ROOT
 import sys
 
-FILE_NAME = "dsssd_calib_Str_r1041_r1042_r1043.root"
-RUN_TAG   = "r1041_r1042_r1043"
+FILE_NAME = "dsssd_calib_Str_r0944_r0945_r0946.root"
+RUN_TAG   = "r0944_r0945_r0946"
+
+# FILE_NAME = "dsssd_calib_Str_r1041_r1042_r1043.root"
+# RUN_TAG   = "r1041_r1042_r1043"
 
 root_file = ROOT.TFile.Open(FILE_NAME, "READ")
 if not root_file or root_file.IsZombie():
