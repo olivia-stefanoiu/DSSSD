@@ -17,36 +17,48 @@ using namespace std;
 
 void dsssd_calibration()
 {
- //gROOT->SetBatch(kTRUE);
+ gROOT->SetBatch(kTRUE);
 
-  //==================== choose SEC run here ====================
+   //==================== choose SEC run here ====================
 
   //r0990
-  TString runTag = "sec_r0990_r0991_r0992";
-  int histogramBins = 1000;
-  double histogramMin = 0;
-  double histogramMax = 20000;
-  TString cutCondition = "Id_6>4.68 && Id_6<5.45 && Id_11>222.2 && Id_11<225";
-  TString fitFunctionExpression = "gaus(0)+gaus(3)+pol1(6)";
-  double fitLeftOffset = 900;
-  double fitRightOffset = 600;
-  double initialParameters[] = {60, 6900, 170.0, 250, 7250, 100, 0.0, 0.0};
-  int numberOfParameters = 8;
+  // TString runTag = "r0990_r0991_r0992";
+  // int histogramBins = 300;
+  // double histogramMin = 5000;
+  // double histogramMax = 8000;
+  // TString cutCondition = "Id_6>4.68 && Id_6<5.45 && Id_11>222.2 && Id_11<225";
+  // TString fitFunctionExpression = "gaus(0)+gaus(3)+pol1(6)";
+  // double fitLeftOffset = 600;
+  // double fitRightOffset = 400;
+  // double initialParameters[] = {570, 6935, 150.0, 315, 7250, 119, 0.0, 0.0};
+  // int numberOfParameters = 8;
 
   //r0944
-  // TString runTag = "r0944";
-  // int histogramBins = 2000;
-  // double histogramMin = 4000;
-  // double histogramMax = 7000;
-  // TString cutCondition = "Id_6>6.56 && Id_6<7.53 && Id_11>226.87 && Id_11<229.02";
-  // TString fitFunctionExpression = "gaus(0)+gaus(3)+pol1(6)";
-  // double fitLeftOffset = 1000;
-  // double fitRightOffset = 600;
-  // double initialParameters[] = {20, 5200, 250, 180, 5600, 150, 0.0, 0.0};
+  TString runTag = "r0944_r0945_r0946";
+  int histogramBins = 2000;
+  double histogramMin = 4000;
+  double histogramMax = 7000;
+  TString cutCondition = "Id_6>6.56 && Id_6<7.53 && Id_11>226.87 && Id_11<229.02";
+  TString fitFunctionExpression = "gaus(0)+gaus(3)+pol1(6)";
+  double fitLeftOffset = 1000;
+  double fitRightOffset = 600;
+  double initialParameters[] = {20, 5200, 250, 180, 5600, 150, 0.0, 0.0};
+  int numberOfParameters = 8;
+
+    //r1041
+  // TString runTag = "r1041_r1042_r1043";
+  // int histogramBins = 500;
+  // double histogramMin = 3000;
+  // double histogramMax = 8000;
+  // TString cutCondition = "Id_6>4.44 && Id_6<5.22 && Id_11>221.33 && Id_11<224.18";
+  // TString fitFunctionExpression = "gaus(0)+gaus(3)+pol2(6)";
+  // double fitLeftOffset = 900;
+  // double fitRightOffset = 800;
+  // double initialParameters[] = {150, 4580, 108.846, 828.432, 5145, 224.788, 0, 0};
   // int numberOfParameters = 8;
 
   //r1081
-  // TString runTag = "r1081";
+  // TString runTag = "r1081_r1082_r1083";
   // int histogramBins = 2000;
   // double histogramMin = 0;
   // double histogramMax = 7000;
@@ -80,8 +92,6 @@ void dsssd_calibration()
   // double fitRightOffset = 700;
   // double initialParameters[] = {10, 5100, 60, 0.0, 0.0};
   // int numberOfParameters = 5;
-
-  //=========================================================
 
    //==================== choose STR run here ====================
 
@@ -162,7 +172,7 @@ void dsssd_calibration()
   //TODO runuri mai tarzii dupa schimbarea cu numexo 1159
 
   std::cout << runTag.Data() << '\n';
-  TString filePattern = Form("/media/olivia/Partition1/CATS/Remerged/r104*.root", runTag.Data());
+  TString filePattern = Form("/media/olivia/Partition1/CATS/Remerged/r094*.root", runTag.Data());
   TString outFileName = Form("dsssd_calib_Sec_%s.root", runTag.Data());
   TString outTextName = outFileName;
   //nume standardizate
@@ -188,7 +198,7 @@ void dsssd_calibration()
 
   bool openedPdf = false;
 
-  for (int stripNumber = 0; stripNumber <= 15; ++stripNumber)
+  for (int stripNumber = 0; stripNumber <= 0; ++stripNumber)
   {
     //set the current directory to which we write to the output file
     outFile->cd();
